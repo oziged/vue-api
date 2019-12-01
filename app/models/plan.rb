@@ -1,4 +1,6 @@
 class Plan < ApplicationRecord
-  def index
-  end
+
+belongs_to :user
+has_many :checkpoints
+
 end

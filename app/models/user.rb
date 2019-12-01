@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :validatable
       # :registerable, :recoverable, :rememberable, 
 
+  has_many :plans
       class << self
         def authenticate(email, password)
           user = User.find_for_authentication(email: email)

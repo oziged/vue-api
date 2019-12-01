@@ -2,8 +2,7 @@ module Api
   class PlansController < ApplicationController
 
     def show
-      @plan = Plan.find(4)
-      puts @plan.inspect
+      @plan = Plan.find(params[:id])
       render json: @plan
     end
 
