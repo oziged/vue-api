@@ -1,6 +1,4 @@
 class Plan < ApplicationRecord
-
-belongs_to :user
-has_many :checkpoints
-
+  belongs_to :user
+  has_many :checkpoints
 end
