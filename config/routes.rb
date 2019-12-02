@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  devise_for :users
+  devise_for :users,
+           :controllers  => {
+             :registrations => 'custom_devise/registrations',
+             :confirmations => 'custom_devise/confirmations'
+           }
 
   use_doorkeeper do
     skip_controllers :authorizations, :applications,
