@@ -1,10 +1,14 @@
 # app/controllers/registrations_controller.rb
 class CustomDevise::RegistrationsController < Devise::RegistrationsController
-  skip_before_action :doorkeeper_authorize!
+  # skip_before_action :doorkeeper_authorize!
 
   def create
     build_resource(sign_up_params)
     resource.save
+    puts '*' *100
+    puts resource.inspect
+    puts resource.errors.inspect
+    puts '*' *100
     # puts resource.active_for_authentication?
     yield resource if block_given?
     if resource.persisted?
@@ -22,13 +26,9 @@ class CustomDevise::RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
       set_minimum_password_length
       # respond_with resource
-      puts '#' * 50
-      puts resource.errors.inspect
-      puts User.last.inspect
-      puts '#' * 50
-      render json: {
-        error: 'already exist', 
-      }, status: 409
+      # render json: {
+      #   error: 'already exist', 
+      # }, status: 409
     end
   end
 

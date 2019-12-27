@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :validatable, :registerable, :confirmable
       # :recoverable, :rememberable, 
 
+  validates :login, presence: true
+
   has_many :plans
       class << self
         def authenticate(email, password)

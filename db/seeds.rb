@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+User.create(login: 'test', email: 'test@gmail.com', password: '123qwe123')
+
+100.times {
+  User.last.plans.create(title: Faker::Space.galaxy, description: Faker::Lorem.sentence(word_count: 30), user_id: 1, rating: rand(1..100), price: rand(1..1000))
+}
