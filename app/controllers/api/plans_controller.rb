@@ -6,9 +6,6 @@ module Api
     end
 
     def index
-      puts '#' * 100
-      puts Plan.test.inspect
-      puts '#' * 100
       # result = Plans::Search(query)
       
       plans = []
@@ -17,7 +14,7 @@ module Api
 
       # offset && limit
       offset = params[:offset].to_i || 0
-      limit = params[:limit].to_i || 10
+      limit = params[:limit].nil? ? 10 : params[:limit].to_i
       max = Plan.maximum(:id)
       plans = Plan.where("id <= ? AND id > ?", max-offset, max-offset-limit)
       # # # # # # # # # #
@@ -48,6 +45,10 @@ module Api
       # # # # # # # # # #
 
       # SORT #
+
+      puts 'plans' * 10
+      puts plans.inspect
+      puts 'plans' * 10
 
       render json: plans
     end

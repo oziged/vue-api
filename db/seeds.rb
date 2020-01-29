@@ -10,5 +10,5 @@
 User.create(login: 'test', email: 'test@gmail.com', password: '123qwe123')
 
 100.times {
-  User.last.plans.create(title: Faker::Space.galaxy, description: Faker::Lorem.sentence(word_count: 30), user_id: 1, rating: rand(1..100), price: rand(1..1000))
+  User.last.plans.create(title: Faker::Space.galaxy, description: Faker::Lorem.sentence(word_count: 30), user_id: 1, rating: rand(1..5), price: rand(1..100))
 }
