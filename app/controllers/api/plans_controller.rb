@@ -53,8 +53,18 @@ module Api
       render json: plans
     end
 
+    def create
+      @user = User.find(1)
+      @plan = @user.plans.create(plan_params)
+      puts @plan.inspect
+    end
+
     private 
-    def filter_sort_params
+      def filter_sort_params
+    end
+
+    def plan_params
+      params.permit(:title, :description)
     end
   end
 end
