@@ -1,7 +1,7 @@
 class PlanSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :title
-  attributes :description
-  attributes :rating
-  attributes :price
+  attribute :id
+  attribute :title
+  attribute :description
+  attribute :rating
+  attribute :price
 end

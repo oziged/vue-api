@@ -1,9 +1,70 @@
 module Api
   class PlansController < ApplicationController
+
     def show
       @plan = Plan.find(params[:id])
-      render json: @plan
+      # render json: @plan
+
+      test = PlanSerializer.new(@plan).serializable_hash
+
+      render json: test
+
+      # array = []
+
+      # @plan.checkpoints.each {|item|
+        # array.push(item)
+      # }
+
+      # render :json => @plan.to_json(:include => :checkpoints)
+      # render json: array
+
+      # Category.joins(articles: [{ comments: :guest }, :tags])
+
+      # # temp def #
+
+      # def get_checkpoints (plan)
+      #   array = []
+
+      #   plan.checkpoints.each { |parent| 
+      #     array.push({
+
+      #     })
+      #     get_nested(parent)
+      #   }
+
+      #   def get_nested (parent)
+
+      #   end
+      # end
+
+      # # # # # # # #
+
+      # @plan = Plan.find(params[:id])
+      # array = get_checkpoints(@plan)
+
+      # # render json: checkpoints
+      # # rescue
+      # #   render json: {
+      # #     error: "Data not found",
+      # #     status: 404
+      # #   }, status: 404
     end
+
+
+    def create
+      @user = User.find(1)
+      @plan = @user.plans.new(plan_params)
+
+      if @plan.save
+        render json: @plan
+      else 
+        render json: {
+          error: "Data is invalid",
+          status: 400
+        }, status: 400
+      end
+    end
+
 
     def index
       # result = Plans::Search(query)
@@ -53,11 +114,6 @@ module Api
       render json: plans
     end
 
-    def create
-      @user = User.find(1)
-      @plan = @user.plans.create(plan_params)
-      puts @plan.inspect
-    end
 
     private 
       def filter_sort_params

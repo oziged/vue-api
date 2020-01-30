@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :login, presence: true
 
   has_many :plans
+  has_many :checkpoints
 
   class << self
     def authenticate(email, password)

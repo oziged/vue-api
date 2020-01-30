@@ -12,3 +12,21 @@ User.create(login: 'test', email: 'test@gmail.com', password: '123qwe123')
 100.times {
   User.last.plans.create(title: Faker::Space.galaxy, description: Faker::Lorem.sentence(word_count: 30), user_id: 1, rating: rand(1..5), price: rand(1..100))
 }
+
+User.last.plans.all.each { |parent| 
+  
+  5.times {
+    checkpoint = nil
+
+    rand(1...4).times {
+      checkpoint = parent.checkpoints.create(
+        user_id: 1,
+        title: Faker::Space.galaxy,
+        description: Faker::Lorem.sentence(word_count: 30),
+      )
+    }
+    
+    parent = checkpoint
+}
+  
+}
