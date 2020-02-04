@@ -3,72 +3,38 @@ module Api
 
     def show
       @plan = Plan.find(params[:id])
-      # render json: @plan
-
-      test = PlanSerializer.new(@plan).serializable_hash
-
-      render json: test
-
-      # array = []
-
-      # @plan.checkpoints.each {|item|
-        # array.push(item)
-      # }
-
-      # render :json => @plan.to_json(:include => :checkpoints)
-      # render json: array
-
-      # Category.joins(articles: [{ comments: :guest }, :tags])
-
-      # # temp def #
-
-      # def get_checkpoints (plan)
-      #   array = []
-
-      #   plan.checkpoints.each { |parent| 
-      #     array.push({
-
-      #     })
-      #     get_nested(parent)
-      #   }
-
-      #   def get_nested (parent)
-
-      #   end
-      # end
-
-      # # # # # # # #
-
-      # @plan = Plan.find(params[:id])
-      # array = get_checkpoints(@plan)
-
-      # # render json: checkpoints
-      # # rescue
-      # #   render json: {
-      # #     error: "Data not found",
-      # #     status: 404
-      # #   }, status: 404
+      render json: PlanSerializer.new(@plan).serializable_hash.merge!({nested: @plan.get_nested_checkpoints})
+      rescue
+        render json: {
+          error: "Data not found",
+          status: 404
+        }, status: 404
     end
 
 
     def create
+      def render_error
+        render json: {
+          error: "Data is invalid",
+          status: 400,
+          errors: @plan.errors
+        }, status: 400
+      end
+
       @user = User.find(1)
       @plan = @user.plans.new(plan_params)
-
       if @plan.save
         render json: @plan
       else 
-        render json: {
-          error: "Data is invalid",
-          status: 400
-        }, status: 400
+        render_error
       end
+      
+      rescue error
+        render_error        
     end
 
 
     def index
-      # result = Plans::Search(query)
-      
       plans = []
 
       # FILTER #

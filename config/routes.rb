@@ -10,9 +10,10 @@ Rails.application.routes.draw do
     skip_controllers :authorizations, :applications,
       :authorized_applications
   end
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
   namespace :api do
     resources :plans
     resources :users
+    resources :checkpoints
   end
 end
