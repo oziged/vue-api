@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_112314) do
+ActiveRecord::Schema.define(version: 2020_02_06_092651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,9 @@ ActiveRecord::Schema.define(version: 2020_01_30_112314) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.bigint "place_id", null: false
     t.index ["checkpointable_type", "checkpointable_id"], name: "index_checkpoints_on_checkpointable_type_and_checkpointable_id"
+    t.index ["place_id"], name: "index_checkpoints_on_place_id"
     t.index ["user_id"], name: "index_checkpoints_on_user_id"
   end
 
@@ -42,6 +44,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_112314) do
   end
 
   create_table "places", force: :cascade do |t|
+    t.float "lat"
+    t.float "lng"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -76,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_112314) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "checkpoints", "places"
   add_foreign_key "checkpoints", "users"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "plans", "users"

@@ -3,12 +3,17 @@ module Api
 
     def show
       @plan = Plan.find(params[:id])
-      render json: PlanSerializer.new(@plan).serializable_hash.merge!({nested: @plan.get_nested_checkpoints})
-      rescue
-        render json: {
-          error: "Data not found",
-          status: 404
-        }, status: 404
+      render json: PlanSerializer.new(@plan).serializable_hash.merge!(
+        {
+          nested: @plan.get_nested_checkpoints,
+          places: @plan.get_child_places(@plan)
+        }
+      )
+      # rescue
+      #   render json: {
+      #     error: "Data not found",
+      #     status: 404
+      #   }, status: 404
     end
 
 

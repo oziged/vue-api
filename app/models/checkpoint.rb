@@ -2,6 +2,7 @@ class Checkpoint < ApplicationRecord
   include NestedHandler
 
   belongs_to :user
+  belongs_to :place
   belongs_to :checkpointable, polymorphic: true
   has_many :checkpoints, as: :checkpointable
 
